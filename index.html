@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RapidFlex - Inicio</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="javascript:void(0)" onclick="mostrarContenido('servicio.html')">Servicio</a>
+      <a href="javascript:void(0)" onclick="mostrarContenido('nosotros.html')">Nosotros</a>
+    </nav>
+    <h1>RapidFlex</h1>
+  </header>
+
+  <!-- Contenedor dinámico -->
+  <div id="contenido-dinamico" style="display:none;"></div>
+
+  <!-- Contenido principal (se ocultará al cargar dinámico) -->
+  <main id="contenido-principal">
+    <section>
+      <h2>Bienvenido a RapidFlex</h2>
+      <p>Este es el contenido de inicio por defecto.</p>
+    </section>
+  </main>
+
+  <script>
+    function mostrarContenido(url) {
+      document.getElementById('contenido-principal').style.display = 'none';
+      const contenedor = document.getElementById('contenido-dinamico');
+      contenedor.style.display = 'block';
+      contenedor.innerHTML = '<p style="padding: 20px;">Cargando contenido...</p>';
+      fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          contenedor.innerHTML = html;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        })
+        .catch(err => {
+          contenedor.innerHTML = '<p style="color:red;">Error al cargar contenido.</p>';
+        });
+    }
+  </script>
+
+</body>
+</html>
